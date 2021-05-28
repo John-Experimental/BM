@@ -1,7 +1,16 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div>
+    <EditForm Model="ReportInput" OnSubmit="TransformReport">
+        <label for="input">Copy paste your html code of the battle report here</label>
+        <br />
+        <InputTextArea @bind-Value="ReportInput" rows="20" />
+        <br />
+        <button type="submit">Transform to wiki friendly report</button>
+    </EditForm>
+</div>
+<div>
+    <label for="output">Wiki friendly output</label>
+    <br />
+    <output>@ReportOutput</output>
+</div>

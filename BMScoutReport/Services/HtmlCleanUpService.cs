@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using BMBattleReport.Services.Interfaces;
+using System.Collections.Generic;
 using System.Text;
 
 namespace BMBattleReport.Services
 {
-    public class HtmlCleanUpService
+    public class HtmlCleanUpService : IHtmlCleanUpService
     {
         private readonly List<string> _requiredPhrases = new() { "Battle in", "<script", "<table", "<span class=\"UID_", "Total casualties:", "hits" };
         private readonly Dictionary<string, string> _replacementValuePairs = new()
