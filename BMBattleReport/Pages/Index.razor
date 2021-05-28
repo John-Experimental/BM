@@ -1,15 +1,16 @@
 ﻿@page "/"
 
-<div>
-    <label>Copy/paste your raw html of a battle report here:</label>
-    <br />
-    <input @bind="ReportInput" />
-    <br />
-    <button @onclick=@TransformReport>Transform to wiki friendly report</button>
-    <br />
+<div class="mainContent">
+    <div class="container">
+        <div class="col-md-12">
+            <label>Copy/paste your raw html of a battle report here:</label>
+            <input @bind="ReportInput" />
+            <button @onclick=@TransformReport>Transform to wiki friendly report</button>
+        </div>
+        <div class="col-md-12">
+            <label for="output">Wiki friendly output</label>
+            <output>@ReportOutput</output>
+        </div>
+    </div>
 </div>
-<div>
-    <label for="output">Wiki friendly output</label>
-    <br />
-    <output>@ReportOutput</output>
-</div>
+
