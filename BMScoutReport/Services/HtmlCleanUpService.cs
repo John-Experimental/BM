@@ -17,6 +17,7 @@ namespace BMBattleReport.Services
                 { "#DDDDDD", "#FF0000"},
                 { "#E0E0FF", "#AD6557"},
                 { "#C0FFC0", "#00FF00"},
+                { "#E0FFFF", "#00FF00" },
 
                 //Change some characters for differences in the HTML and Wiki code (including trailing spaces etc)
                 { "\\r\\n", ""},

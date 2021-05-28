@@ -17,11 +17,6 @@ namespace BMBattleReport.Pages
         {
             ReportOutput = _htmlCleanUpService.CleanUpHTML(ReportInput);
             ReportInput = string.Empty;
-
-            InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
         }
     }
 }
