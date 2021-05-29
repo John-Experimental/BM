@@ -1,7 +1,9 @@
 ﻿.mainContent {
     display: flex;
     align-content: center;
-    width: 80vw;
-    height: 80vh;
-    align-self: center;
+    margin: 2%;
+}
+
+.paragraphSection {
+    margin: 20px 0px;
 }
