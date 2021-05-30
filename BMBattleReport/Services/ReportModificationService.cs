@@ -1,5 +1,6 @@
 ﻿using BMBattleReport.Models;
 using BMBattleReport.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace BMBattleReport.Services
             var additionalStats = "<th>Hits Scored</th><th>Soldiers killed</th><th>Soldiers lost</th>";
             var result = source.Insert(indexEndRow, additionalStats);
 
-            int index; 
+            int index;
             int hitsScored;
             decimal casualtiesInflicted;
             int casualtiesTaken;
@@ -34,6 +35,17 @@ namespace BMBattleReport.Services
             }
 
             return result;
+        }
+
+        public string AddSummaryToSource(string source, Summary summary)
+        {
+            var infoBox = $"{{{{Infobox Military Conflict |conflict= Battle of {summary.Region} |partof= {summary.RegionOwner} |image= |caption= " +
+                $"|date= {DateTime.Today.ToShortDateString()} |place= [[{summary.Region}]] |weather= {summary.Weather} |territory=none |result= {summary.Outcome} |combatant1= {string.Join("; ", summary.Attackers)}" +
+                $"|combatant2= {string.Join("; ", summary.Defenders)} |commander1= To do |commander2= To do |strength1= {summary.AttackersStrength}" +
+                $"|strength2= {summary.DefendersStrength} |formation1= To do |formation2= To do |rounds= {summary.NumberOfRounds}" +
+                $"|casualties1= {summary.AttackersCasualties} |casualties2= {summary.DefendersCasualties}}}}}__NOTOC__";
+
+            return $"{infoBox} {source}";
         }
     }
 }

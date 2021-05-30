@@ -12,6 +12,8 @@ namespace BMBattleReport.Pages
         public IHtmlParseService _htmlParseService { get; set; }
         [Inject]
         public IReportModificationService _reportModificationService { get; set; }
+        [Inject]
+        public ISummaryService _summaryService { get; set; }
 
         [Required]
         public string ReportInput = string.Empty;
@@ -23,7 +25,10 @@ namespace BMBattleReport.Pages
             var nobles = _htmlParseService.ExtractNoblesInformation(cleanedUpReport);
             var expandedReport = _reportModificationService.InsertNobleStatsIntoSource(cleanedUpReport, nobles);
 
-            ReportOutput = expandedReport;
+            var summary = _summaryService.CreateSummary(expandedReport, nobles);
+            var reportWithInfoBox = _reportModificationService.AddSummaryToSource(expandedReport, summary);
+
+            ReportOutput = reportWithInfoBox;
             ReportInput = string.Empty;
         }
     }

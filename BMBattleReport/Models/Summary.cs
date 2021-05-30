@@ -8,6 +8,7 @@ namespace BMBattleReport.Models
         public string RegionOwner { get; init; }
         public string Weather { get; init; }
         public string Outcome { get; init; }
+        public int NumberOfRounds { get; init; }
         
         public List<string> Defenders { get; init; }
         public string DefendersStrength { get; init; }

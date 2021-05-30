@@ -20,6 +20,7 @@ namespace BMBattleReport
             builder.Services.AddScoped<IHtmlParseService, HtmlParseService>();
             builder.Services.AddScoped<IHelperService, HelperService>();
             builder.Services.AddScoped<IReportModificationService, ReportModificationService>();
+            builder.Services.AddScoped<ISummaryService, SummaryService>();
 
             await builder.Build().RunAsync();
         }
