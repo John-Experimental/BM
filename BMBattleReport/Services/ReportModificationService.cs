@@ -10,14 +10,13 @@ namespace BMBattleReport.Services
         public string InsertNobleStatsIntoSource(string source, List<Noble> nobles)
         {
             var indexEndRow = source.IndexOf("</tr>");
-            var additionalStats = "<th>Hits Scored</th><th>Soldiers lost</th>";
+            var additionalStats = "<th>Hits Scored</th><th>Soldiers killed</th><th>Soldiers lost</th>";
             var result = source.Insert(indexEndRow, additionalStats);
 
-            var index = 0;
-
-            var hitsScored = 0;
-            //var casualtiesInflicted = 0;
-            var casualtiesTaken = 0;
+            int index; 
+            int hitsScored;
+            decimal casualtiesInflicted;
+            int casualtiesTaken;
 
             foreach (var noble in nobles)
             {
@@ -26,11 +25,10 @@ namespace BMBattleReport.Services
                 indexEndRow = result.IndexOf("</tr>", index);
 
                 hitsScored = noble.HitsScoredPerRoundPerTarget.Sum(round => round.Value.Sum(hits => hits.Value));
-                //casualtiesInflicted = noble.CasualtiesInflicted.Sum(casualty => casualty.Value);
+                casualtiesInflicted = noble.CasualtiesInflictedPerRound.Sum(round => round.Value);
                 casualtiesTaken = noble.CasualtiesTakenPerRound.Sum(round => round.Value);
 
-                //<td style=\"text-align: center; \">{casualtiesInflicted} kills</td>
-                additionalStats = $"<td style=\"text-align: right; \">{hitsScored} hits</td><td style=\"text-align: center; \">{casualtiesTaken} losses</td>";
+                additionalStats = $"<td style=\"text-align: right; \">{hitsScored} hits</td><td style=\"text-align: center; \">{casualtiesInflicted} kills</td><td style=\"text-align: center; \">{casualtiesTaken} losses</td>";
 
                 result = result.Insert(indexEndRow, additionalStats);
             }
