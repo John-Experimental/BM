@@ -8,6 +8,10 @@ namespace BMBattleReport.Pages
     {
         [Inject]
         public IHtmlCleanUpService _htmlCleanUpService { get; set; }
+        [Inject]
+        public IHtmlParseService _htmlParseService { get; set; }
+        [Inject]
+        public IReportModificationService _reportModificationService { get; set; }
 
         [Required]
         public string ReportInput = string.Empty;
@@ -15,7 +19,11 @@ namespace BMBattleReport.Pages
 
         private void TransformReport()
         {
-            ReportOutput = _htmlCleanUpService.CleanUpHTML(ReportInput);
+            var cleanedUpReport = _htmlCleanUpService.CleanUpHTML(ReportInput);
+            var nobles = _htmlParseService.ExtractNoblesInformation(cleanedUpReport);
+            var expandedReport = _reportModificationService.InsertNobleStatsIntoSource(cleanedUpReport, nobles);
+
+            ReportOutput = expandedReport;
             ReportInput = string.Empty;
         }
     }

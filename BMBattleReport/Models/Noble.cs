@@ -14,20 +14,19 @@ namespace BMBattleReport.Models
         public string UnitFormation { get; set; }
         public string CS { get; set; }
 
-        //Dictionary is build up like: target-{roundnr}, hits
-        public Dictionary<string, int> HitsScored { get; set; } 
-        public Dictionary<int, int> HitsTaken { get; set; }
-        public Dictionary<int, int> CasualtiesTaken { get; set; }
-        public Dictionary<int, int> HitsPerCasualty { get; set; }
-        public Dictionary<int, int> CasualtiesInflicted { get; set; }
+        public Dictionary<int, Dictionary<string, int>> HitsScoredPerRoundPerTarget { get; set; } 
+        public Dictionary<int, int> HitsTakenPerRound { get; set; }
+        public Dictionary<int, int> CasualtiesTakenPerRound { get; set; }
+        public Dictionary<int, int> DivisionHitsCasualtyPerRound { get; set; }
+        public Dictionary<int, int> CasualtiesInflictedPerRound { get; set; }
 
         public Noble()
         {
-            HitsScored = new Dictionary<string, int>();
-            HitsTaken = new Dictionary<int, int>();
-            CasualtiesTaken = new Dictionary<int, int>();
-            HitsPerCasualty = new Dictionary<int, int>();
-            CasualtiesInflicted = new Dictionary<int, int>();
+            HitsScoredPerRoundPerTarget = new Dictionary<int, Dictionary<string, int>>();
+            HitsTakenPerRound = new Dictionary<int, int>();
+            CasualtiesTakenPerRound = new Dictionary<int, int>();
+            DivisionHitsCasualtyPerRound = new Dictionary<int, int>();
+            CasualtiesInflictedPerRound = new Dictionary<int, int>();
         }
     }
 }
