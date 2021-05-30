@@ -46,7 +46,6 @@ namespace BMBattleReport.Services
 
                     AssignHitsInflicted(textCurrentRound, noble, roundNumber);
                     AssignStatsSuffered(textCurrentRound, noble, roundNumber);
-                    //nobles = GetCasualtiesInflicted(nobles, roundNumber);
                 }
 
                 ++roundNumber;
@@ -56,7 +55,7 @@ namespace BMBattleReport.Services
             return nobles;
         }
 
-        private List<Noble> ExtractNoblesBasicInformation(HtmlDocument htmlSource)
+        private static List<Noble> ExtractNoblesBasicInformation(HtmlDocument htmlSource)
         {
             var combatantsOverviewTable = htmlSource.DocumentNode.SelectNodes("/table").First();
             var tableRows = combatantsOverviewTable.ChildNodes;
