@@ -17,16 +17,16 @@ namespace BMBattleReport.Models
         public Dictionary<int, Dictionary<string, int>> HitsScoredPerRoundPerTarget { get; set; } 
         public Dictionary<int, int> HitsTakenPerRound { get; set; }
         public Dictionary<int, int> CasualtiesTakenPerRound { get; set; }
-        public Dictionary<int, int> DivisionHitsCasualtyPerRound { get; set; }
-        public Dictionary<int, int> CasualtiesInflictedPerRound { get; set; }
+        public Dictionary<int, decimal> DivisionHitsCasualtyPerRound { get; set; }
+        public Dictionary<int, decimal> CasualtiesInflictedPerRound { get; set; }
 
         public Noble()
         {
             HitsScoredPerRoundPerTarget = new Dictionary<int, Dictionary<string, int>>();
             HitsTakenPerRound = new Dictionary<int, int>();
             CasualtiesTakenPerRound = new Dictionary<int, int>();
-            DivisionHitsCasualtyPerRound = new Dictionary<int, int>();
-            CasualtiesInflictedPerRound = new Dictionary<int, int>();
+            DivisionHitsCasualtyPerRound = new Dictionary<int, decimal>();
+            CasualtiesInflictedPerRound = new Dictionary<int, decimal>();
         }
     }
 }

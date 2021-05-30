@@ -2,6 +2,7 @@
 using BMBattleReport.Models;
 using BMBattleReport.Services.Interfaces;
 using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,6 +25,7 @@ namespace BMBattleReport.Services
 
             var nobles = ExtractNoblesBasicInformation(html);
             nobles = ExtractCombatResultsForNobles(nobles, source);
+            nobles = CalculateAdditionalStatsForNobles(nobles);
 
             return nobles;
         }
@@ -113,7 +115,7 @@ namespace BMBattleReport.Services
         private void AssignAllOccurancesToNoble(string subSource, string hitsInflictedIndicator, Noble noble, int round)
         {
             int hits;
-            string target;
+            string targetNobleNumber;
 
             var indexOfHitsInflicted = subSource.IndexOf(hitsInflictedIndicator);
 
@@ -126,15 +128,15 @@ namespace BMBattleReport.Services
                 subSource = subSource[indexOfHitsInflicted..];
 
                 hits = GetNumberBeforeIndicator(subSource, CommonCharacters.HitsInflictedIndicator);
-                target = _helperService.GetSubstringMiddle(subSource, CommonCharacters.TargetIndicator, CommonCharacters.HitsEnding, true);
+                targetNobleNumber = _helperService.GetSubstringMiddle(subSource, CommonCharacters.TargetIndicator, CommonCharacters.HitsEnding).Split(CommonCharacters.OpeningParenthesis).Last();
 
-                if (noble.HitsScoredPerRoundPerTarget[round].ContainsKey(target))
+                if (noble.HitsScoredPerRoundPerTarget[round].ContainsKey(targetNobleNumber))
                 {
-                    noble.HitsScoredPerRoundPerTarget[round][target] += hits;
+                    noble.HitsScoredPerRoundPerTarget[round][targetNobleNumber] += hits;
                 }
                 else
                 {
-                    noble.HitsScoredPerRoundPerTarget[round].Add(target, hits);
+                    noble.HitsScoredPerRoundPerTarget[round].Add(targetNobleNumber, hits);
                 }
 
                 //This ensures we keep looking in the rest of the text whether or not it occurs again
@@ -158,7 +160,7 @@ namespace BMBattleReport.Services
 
                 noble.HitsTakenPerRound[round] = hits;
                 noble.CasualtiesTakenPerRound[round] = casualties;
-                noble.DivisionHitsCasualtyPerRound[round] = hits / casualties;
+                noble.DivisionHitsCasualtyPerRound[round] = casualties > 0 ? decimal.Divide(hits,casualties) : 0;
             }
         }
 
@@ -167,7 +169,36 @@ namespace BMBattleReport.Services
             var subResult = _helperService.GetSubstringBeforeFirstOccurance(source, indicator);
             subResult = _helperService.GetSubstringAfterLastOccurance(subResult, CommonCharacters.WhiteSpace);
 
+            if (subResult.Contains("no", System.StringComparison.OrdinalIgnoreCase))
+            {
+                return 0;
+            }
+
             return int.Parse(subResult);
+        }
+
+        private static List<Noble> CalculateAdditionalStatsForNobles(List<Noble> nobles)
+        {
+            foreach (var noble in nobles)
+            {
+                foreach (var round in noble.HitsScoredPerRoundPerTarget)
+                {
+                    noble.CasualtiesInflictedPerRound[round.Key] = 0;
+
+                    foreach (var hitsScored in round.Value)
+                    {
+                        var targetNoble = nobles.First(noble => noble.No == hitsScored.Key);
+                        if (targetNoble.DivisionHitsCasualtyPerRound[round.Key] > 0)
+                        {
+                            var casualtiesInflicted = Math.Round(decimal.Divide(hitsScored.Value, targetNoble.DivisionHitsCasualtyPerRound[round.Key]), 0);
+
+                            noble.CasualtiesInflictedPerRound[round.Key] += casualtiesInflicted;
+                        }
+                    }
+                }
+            }
+
+            return nobles;
         }
     }
 }
