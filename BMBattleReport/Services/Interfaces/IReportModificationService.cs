@@ -6,5 +6,6 @@ namespace BMBattleReport.Services.Interfaces
     public interface IReportModificationService
     {
         string InsertNobleStatsIntoSource(string source, List<Noble> nobles);
+        string AddSummaryToSource(string source, Summary summary);
     }
 }
