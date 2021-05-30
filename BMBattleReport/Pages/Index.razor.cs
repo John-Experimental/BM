@@ -1,6 +1,9 @@
 ﻿using BMBattleReport.Services.Interfaces;
+using HtmlAgilityPack;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace BMBattleReport.Pages
 {
@@ -8,6 +11,8 @@ namespace BMBattleReport.Pages
     {
         [Inject]
         public IHtmlCleanUpService _htmlCleanUpService { get; set; }
+        [Inject]
+        public IHtmlParseService _htmlParseService { get; set; }
 
         [Required]
         public string ReportInput = string.Empty;
@@ -15,7 +20,10 @@ namespace BMBattleReport.Pages
 
         private void TransformReport()
         {
-            ReportOutput = _htmlCleanUpService.CleanUpHTML(ReportInput);
+            var cleanedUpReport = _htmlCleanUpService.CleanUpHTML(ReportInput);
+            var nobles = _htmlParseService.ExtractNoblesInformation(cleanedUpReport);
+
+            ReportOutput = cleanedUpReport;
             ReportInput = string.Empty;
         }
     }
