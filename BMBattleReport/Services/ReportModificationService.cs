@@ -41,8 +41,8 @@ namespace BMBattleReport.Services
         {
             var infoBox = $"{{{{Infobox Military Conflict |conflict= Battle of {summary.Region} |partof= {summary.RegionOwner} |image= |caption= " +
                 $"|date= {DateTime.Today.ToShortDateString()} |place= [[{summary.Region}]] |weather= {summary.Weather} |territory=none |result= {summary.Outcome} |combatant1= {string.Join("; ", summary.Attackers)}" +
-                $"|combatant2= {string.Join("; ", summary.Defenders)} |commander1= To do |commander2= To do |strength1= {summary.AttackersStrength}" +
-                $"|strength2= {summary.DefendersStrength} |formation1= To do |formation2= To do |rounds= {summary.NumberOfRounds}" +
+                $"|combatant2= {string.Join("; ", summary.Defenders)} |commander1= {string.Join("; ", summary.AttackersCommanders)} |commander2= {string.Join("; ", summary.DefendersCommanders)} |strength1= {summary.AttackersStrength}" +
+                $"|strength2= {summary.DefendersStrength} |formation1= {string.Join("; ", summary.AttackersFormations)} |formation2= {string.Join("; ", summary.DefendersFormations)} |rounds= {summary.NumberOfRounds}" +
                 $"|casualties1= {summary.AttackersCasualties} |casualties2= {summary.DefendersCasualties}}}}}__NOTOC__";
 
             return $"{infoBox} {source}";

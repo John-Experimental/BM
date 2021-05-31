@@ -30,6 +30,30 @@ namespace BMBattleReport.Services
             return nobles;
         }
 
+        public List<Army> ExtractArmiesInformation(string source)
+        {
+            var armies = new List<Army>();
+
+            var relevantSection = _helperService.GetSubstringMiddle(source, "Total combat strengths:", "Turn No. 1");
+            var armySections = relevantSection.Split("<img src=").ToArray();
+
+            string commander;
+            string formation;
+            for (int i = 1; i < armySections.Length; i++)
+            {
+                commander = _helperService.GetSubstringMiddle(armySections[i], CommonCharacters.ClosingTag, CommonCharacters.CommanderSeparator).Trim();
+                formation = _helperService.GetSubstringMiddle(armySections[i], "They deploy in", CommonCharacters.Period).Trim();
+
+                armies.Add(new Army 
+                { 
+                    Commander = commander, 
+                    Formation = formation 
+                });
+            }
+
+            return armies;
+        }
+
         private List<Noble> ExtractCombatResultsForNobles(List<Noble> nobles, string source)
         {
             var roundNumber = 1;
