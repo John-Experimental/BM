@@ -4,6 +4,7 @@
     {
         public const string Space = "&nbsp;";
         public const string WhiteSpace = " ";
+        public const string Period = ".";
 
         public const string HitsEnding = ")";
         public const string OpeningParenthesis = "(";
@@ -11,5 +12,8 @@
         public const string HitsInflictedIndicator = " hits";
         public const string HitsSufferedIndicator = " take ";
         public const string CasualtiesIndicator = " casualties";
+
+        public const string CommanderSeparator = ",";
+        public const string ClosingTag = ">";
     }
 }
