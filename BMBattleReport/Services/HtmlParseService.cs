@@ -152,15 +152,19 @@ namespace BMBattleReport.Services
                 subSource = subSource[indexOfHitsInflicted..];
 
                 hits = GetNumberBeforeIndicator(subSource, CommonCharacters.HitsInflictedIndicator);
-                targetNobleNumber = _helperService.GetSubstringMiddle(subSource, CommonCharacters.TargetIndicator, CommonCharacters.HitsEnding).Split(CommonCharacters.OpeningParenthesis).Last();
 
-                if (noble.HitsScoredPerRoundPerTarget[round].ContainsKey(targetNobleNumber))
+                if (hits > 0)
                 {
-                    noble.HitsScoredPerRoundPerTarget[round][targetNobleNumber] += hits;
-                }
-                else
-                {
-                    noble.HitsScoredPerRoundPerTarget[round].Add(targetNobleNumber, hits);
+                    targetNobleNumber = _helperService.GetSubstringMiddle(subSource, CommonCharacters.TargetIndicator, CommonCharacters.HitsEnding).Split(CommonCharacters.OpeningParenthesis).Last();
+
+                    if (noble.HitsScoredPerRoundPerTarget[round].ContainsKey(targetNobleNumber))
+                    {
+                        noble.HitsScoredPerRoundPerTarget[round][targetNobleNumber] += hits;
+                    }
+                    else
+                    {
+                        noble.HitsScoredPerRoundPerTarget[round].Add(targetNobleNumber, hits);
+                    }
                 }
 
                 //This ensures we keep looking in the rest of the text whether or not it occurs again
@@ -211,7 +215,8 @@ namespace BMBattleReport.Services
 
                     foreach (var hitsScored in round.Value)
                     {
-                        var targetNoble = nobles.First(noble => noble.No == hitsScored.Key);
+                        var targetNoble = nobles.First(n => n.No == hitsScored.Key);
+
                         if (targetNoble.DivisionHitsCasualtyPerRound[round.Key] > 0)
                         {
                             var casualtiesInflicted = Math.Round(decimal.Divide(hitsScored.Value, targetNoble.DivisionHitsCasualtyPerRound[round.Key]), 0);
