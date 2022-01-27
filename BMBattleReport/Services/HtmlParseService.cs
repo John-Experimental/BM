@@ -219,14 +219,6 @@ namespace BMBattleReport.Services
                     {
                         var targetNoble = nobles.First(n => n.No == hitsScored.Key);
 
-                        if (noble.NobleName == "Sagari" && round.Key == 3)
-                        {
-                            foreach (var smth in targetNoble.DivisionHitsCasualtyPerRound)
-                            {
-                                Console.WriteLine($"key: {smth.Key} -- value: {smth.Value}");
-                            }
-                        }
-
                         if (targetNoble.DivisionHitsCasualtyPerRound[round.Key] > 0)
                         {
                             var casualtiesInflicted = Math.Round(decimal.Divide(hitsScored.Value, targetNoble.DivisionHitsCasualtyPerRound[round.Key]), 0);
