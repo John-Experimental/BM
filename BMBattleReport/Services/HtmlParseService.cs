@@ -129,7 +129,7 @@ namespace BMBattleReport.Services
 
             foreach (var indicator in _hitsScoredIndicators)
             {
-                var hitsInflictedIndicator = $"{noble.UnitName} ({noble.No}) {indicator}";
+                var hitsInflictedIndicator = string.IsNullOrEmpty(noble.UnitName) ? $"({noble.No}) {indicator}" : $"{noble.UnitName} ({noble.No}) {indicator}";
                 subSource = source;
 
                 AssignAllOccurancesToNoble(subSource, hitsInflictedIndicator, noble, round);
@@ -177,7 +177,9 @@ namespace BMBattleReport.Services
             int hits;
             int casualties;
 
-            var hitsSufferedIndicator = $"{noble.UnitName} ({noble.No}){CommonCharacters.HitsSufferedIndicator}";
+            var hitsSufferedIndicator = string.IsNullOrEmpty(noble.UnitName) ? 
+                $"({noble.No}){CommonCharacters.HitsSufferedIndicator}" :  $"{noble.UnitName} ({noble.No}){CommonCharacters.HitsSufferedIndicator}";
+
             var indexOfHitsSuffered = subSource.IndexOf(hitsSufferedIndicator);
 
             if (indexOfHitsSuffered >= 0)
