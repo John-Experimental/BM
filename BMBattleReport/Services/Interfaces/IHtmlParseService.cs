@@ -1,4 +1,5 @@
 ﻿using BMBattleReport.Models;
+using HtmlAgilityPack;
 using System.Collections.Generic;
 
 namespace BMBattleReport.Services.Interfaces
@@ -7,5 +8,6 @@ namespace BMBattleReport.Services.Interfaces
     {
         List<Noble> ExtractNoblesInformation(string source);
         List<Army> ExtractArmiesInformation(string source);
+        List<Noble> ExtractScoutReportUnitTable(string source);
     }
 }

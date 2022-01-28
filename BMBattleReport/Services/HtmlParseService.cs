@@ -120,6 +120,56 @@ namespace BMBattleReport.Services
                     nobles.Add(newNoble);
                 }
             }
+
+            return nobles;
+        }
+
+        public List<Noble> ExtractScoutReportUnitTable(string source)
+        {
+            var html = new HtmlDocument();
+            html.LoadHtml(source);
+
+            var unitsOverviewTable = html.DocumentNode.SelectNodes("//table[contains(@class, 'tabtable')]")[1];
+            var table = unitsOverviewTable.ChildNodes;
+
+            var nobles = new List<Noble>();
+
+            foreach (var section in table)
+            {
+                var rows = section.ChildNodes;
+                
+                foreach (var row in rows)
+                {
+                    if (row.OuterHtml.Contains("<td>"))
+                    {
+                        var td = row.ChildNodes;
+
+                        string nobleName;
+                        Console.WriteLine(td[4].InnerHtml);
+                        if (td[2].InnerHtml.Contains("(militia/guards)"))
+                        {
+                            nobleName = "militia / guard unit";
+                        }
+                        else
+                        {
+                            nobleName = td[2].InnerHtml.Replace(CommonCharacters.Space, string.Empty);
+                        }
+
+                        var newNoble = new Noble
+                        {
+                            UnitName = td[1].InnerHtml.Replace(CommonCharacters.Space, string.Empty),
+                            NobleName = nobleName,
+                            Realm = td[3].InnerHtml.Replace(CommonCharacters.Space, string.Empty),
+                            UnitSize = td[4].InnerHtml.Split(CommonCharacters.WhiteSpace, 2)[0],
+                            UnitType = td[4].InnerHtml.Split(CommonCharacters.WhiteSpace, 2)[1],
+                            CS = td[6].InnerHtml,
+                        };
+
+                        nobles.Add(newNoble);
+                    }
+                }
+            }
+
             return nobles;
         }
 

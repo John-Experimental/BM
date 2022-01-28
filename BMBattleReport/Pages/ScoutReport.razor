@@ -1,0 +1,55 @@
+﻿@page "/ScoutReport"
+
+<div class="mainContent">
+    <div class="container">
+        <div class="col-md-12">
+            <h1>Get a clear overview from your scout report</h1>
+            <ul>
+                <li>Step 1: Go to the scout report and 'right mouse click'</li>
+                <li>Step 2: Click on 'View Page Source' (NOT 'inspect source', which is different)</li>
+                <li>Step 3: Select all and copy paste it to the input field below</li>
+                <li>Step 4: Click the button. Then the analysis on unit composition will appear below it.</li>
+            </ul>
+        </div>
+        <div class="paragraphSection col-sm-12">
+            <label>Copy/paste your raw html of a scout report here:</label>
+            <input @bind="ReportInput" />
+            <button @onclick=@TransformReport>Transform to wiki friendly report</button>
+        </div>
+        <div class="col-sm-12">
+            <label>Scout report analysis</label>
+            <div>
+                @foreach (var summary in Summaries)
+                {
+                    <h4>@summary.RealmName</h4>
+                    <table class="summary-table">
+                        <tr>
+                            <th>Number of Infantry</th>
+                            <th>Total infantry CS</th>
+                            <th>Number of Mixed Infantry</th>
+                            <th>Total Mixed Infantry CS</th>
+                            <th>Number of Cavalry</th>
+                            <th>Total cavalry CS</th>
+                            <th>Number of Archers</th>
+                            <th>Total archers CS</th>
+                            <th>Number of Special Forces</th>
+                            <th>Total Special Forces CS</th>
+                        </tr>
+                        <tr>
+                            <th>@summary.NumberOfInfantry</th>
+                            <th>@summary.TotalInfantryCS</th>
+                            <th>@summary.NumberOfMixedInfantry</th>
+                            <th>@summary.TotalMixedInfantryCS</th>
+                            <th>@summary.NumberOfCavalry</th>
+                            <th>@summary.TotalCavalryCS</th>
+                            <th>@summary.NumberOfArchers</th>
+                            <th>@summary.TotalArchersCS</th>
+                            <th>@summary.NumberOfSpecialForces</th>
+                            <th>@summary.TotalSpecialForcesCS</th>
+                        </tr>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
