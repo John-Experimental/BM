@@ -15,22 +15,9 @@ namespace BMBattleReport.Pages
         [Inject]
         public ISummaryService _summaryService { get; set; }
 
-        [Inject]
-        public NavigationManager NavManager { get; set; }
-
         [Required]
         public string ReportInput = string.Empty;
         public string ReportOutput;
-
-        protected override void OnInitialized()
-        {
-            ReportOutput = $"baseuri: {NavManager.BaseUri}";
-        }
-
-        private void TestNavigation()
-        {
-            NavManager.NavigateTo("ScoutReport");
-        }
 
         private void TransformReport()
         {
