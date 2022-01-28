@@ -29,7 +29,7 @@ namespace BMBattleReport.Pages
 
         private void TestNavigation()
         {
-            NavManager.NavigateTo("ScoutReport", forceLoad: true);
+            NavManager.NavigateTo("ScoutReport");
         }
 
         private void TransformReport()
