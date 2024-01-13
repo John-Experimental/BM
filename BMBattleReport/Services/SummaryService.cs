@@ -20,7 +20,7 @@ namespace BMBattleReport.Services
             { "The battle takes place in the middle of a storm, archers will be almost worthless", "Storm" }
         };
 
-        private readonly List<string> _outcomeOptions = new() { "Attacker Victory", "Defender Victory", "Draw" };
+        private readonly List<string> _outcomeOptions = new() { "Attacker Victory", "Defender Victory", "Draw", "No winners" };
 
         public SummaryService(IHelperService helperService, IHtmlParseService htmlParseService)
         {
@@ -35,8 +35,8 @@ namespace BMBattleReport.Services
             var regionOwner = _helperService.GetSubstringMiddle(source, "The region owner ", " and their allies defend");
             if (regionOwner.Length > 30) { regionOwner = "Unknown"; };
 
-            var weather = _weatherOptions.First(option => source.Contains(option.Key)).Value;
-            var outcome = _outcomeOptions.First(option => source.Contains(option));
+            var weather = _weatherOptions.FirstOrDefault(option => source.Contains(option.Key)).Value ?? "Unknown";
+            var outcome = _outcomeOptions.FirstOrDefault(source.Contains) ?? "Unknown";
 
             var attackingNobles = nobles.Where(noble => noble.Role == "A").ToList();
             var defendingNobles = nobles.Where(noble => noble.Role == "D").ToList();
