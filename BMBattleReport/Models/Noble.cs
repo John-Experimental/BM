@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BMBattleReport.Models
 {
+    [DebuggerDisplay("{NobleName} from {Realm} with unit: {UnitName} - {UnitType}")]
     public class Noble
     {
         public string No { get; set; }
