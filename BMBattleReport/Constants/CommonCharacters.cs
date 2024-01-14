@@ -1,4 +1,6 @@
-﻿namespace BMBattleReport.Constants
+﻿using System.Collections.Generic;
+
+namespace BMBattleReport.Constants
 {
     public class CommonCharacters
     {
@@ -6,7 +8,7 @@
         public const string WhiteSpace = " ";
         public const string Period = ".";
 
-        public const string HitsEnding = ")";
+        public static readonly List<string> HitsEnding = new() { "),", ")."};
         public const string OpeningParenthesis = "(";
         public const string TargetIndicator = " on ";
         public const string HitsInflictedIndicator = " hits";
