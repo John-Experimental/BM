@@ -29,7 +29,7 @@ namespace BMBattleReport.Services
                 casualtiesInflicted = noble.CasualtiesInflictedPerRound.Sum(round => round.Value);
                 casualtiesTaken = noble.CasualtiesTakenPerRound.Sum(round => round.Value);
 
-                additionalStats = $"<td style=\"text-align: right; \">{hitsScored} hits</td><td style=\"text-align: center; \">{casualtiesInflicted} kills</td><td style=\"text-align: center; \">{casualtiesTaken} losses</td>";
+                additionalStats = $"<td style=\"text-align: right; \">{hitsScored}</td><td style=\"text-align: center; \">{casualtiesInflicted}</td><td style=\"text-align: center; \">{casualtiesTaken}</td>";
 
                 result = result.Insert(indexEndRow, additionalStats);
             }
