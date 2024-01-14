@@ -17,5 +17,7 @@ namespace BMBattleReport.Constants
 
         public const string CommanderSeparator = ",";
         public const string ClosingTag = ">";
+
+        public const string TableOpening = "<table ";
     }
 }

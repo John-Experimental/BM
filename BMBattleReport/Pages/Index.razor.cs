@@ -28,7 +28,9 @@ namespace BMBattleReport.Pages
             var summary = _summaryService.CreateSummary(expandedReport, nobles);
             var reportWithInfoBox = _reportModificationService.AddSummaryToSource(expandedReport, summary);
 
-            ReportOutput = reportWithInfoBox;
+            var finalReport = _reportModificationService.MakeNobleTableSortable(reportWithInfoBox);
+
+            ReportOutput = finalReport;
             ReportInput = string.Empty;
         }
     }
