@@ -1,4 +1,5 @@
 ﻿using BMBattleReport.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,9 +13,21 @@ namespace BMBattleReport.Services
             
             var adjustedSource = source[firstIndex..];
 
-            var (indexEnd, secondIndex) = indexEnds.Select(x => (x, adjustedSource.IndexOf(x))).Min();
+            string indexEnd = "";
+            var secondIndex = int.MaxValue;
 
-            if (secondIndex == -1)
+            foreach (var indexType in indexEnds)
+            {
+                var index = adjustedSource.IndexOf(indexType);
+
+                if (index != -1 && index < secondIndex)
+                {
+                    secondIndex = index;
+                    indexEnd = indexType;
+                }
+            }
+
+            if (secondIndex == int.MaxValue)
             {
                 return adjustedSource;
             }
