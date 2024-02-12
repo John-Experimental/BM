@@ -1,4 +1,5 @@
 ﻿using BMBattleReport.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +13,9 @@ namespace BMBattleReport.Services
             
             var adjustedSource = source[firstIndex..];
 
-            var (indexEnd, secondIndex) = indexEnds.Select(x => (x, adjustedSource.IndexOf(x))).Min();
+            var indexes = indexEnds.Select(x => (x, adjustedSource.IndexOf(x))).ToList();
+            var lowestIndex = indexes.Min(x => x.Item2);
+            var (indexEnd, secondIndex) = indexes.First(x => x.Item2 == lowestIndex);
 
             if (secondIndex == -1)
             {
