@@ -13,7 +13,7 @@ namespace BMBattleReport.Services
             
             var adjustedSource = source[firstIndex..];
 
-            var indexes = indexEnds.Select(x => (x, adjustedSource.IndexOf(x))).ToList();
+            var indexes = indexEnds.Select(x => (x, adjustedSource.IndexOf(x))).Where(x => x.Item2 != -1).ToList();
             var lowestIndex = indexes.Min(x => x.Item2);
             var (indexEnd, secondIndex) = indexes.First(x => x.Item2 == lowestIndex);
 
