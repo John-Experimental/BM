@@ -207,6 +207,11 @@ namespace BMBattleReport.Services
                 {
                     targetNobleNumber = _helperService.GetSubstringMiddle(subSource, CommonCharacters.TargetIndicator, CommonCharacters.HitsEnding).Split(CommonCharacters.OpeningParenthesis).Last();
 
+                    if (targetNobleNumber.Contains("overkill"))
+                    {
+                        targetNobleNumber = _helperService.GetSubstringMiddle(subSource[..(subSource.Length - 3)], CommonCharacters.TargetIndicator, ")").Split(CommonCharacters.OpeningParenthesis).Last();
+                    }
+
                     if (noble.HitsScoredPerRoundPerTarget[round].ContainsKey(targetNobleNumber))
                     {
                         noble.HitsScoredPerRoundPerTarget[round][targetNobleNumber] += hits;
